@@ -11,7 +11,7 @@ lex.yy.c: $(flex_file) y.tab.h
 	flex $(flex_file)
 
 $(program_exe): lex.yy.c y.tab.c y.tab.h
-	gcc -o $(program_exe) y.tab.c lex.yy.c
+	gcc -o $(program_exe) y.tab.c lex.yy.c -lm
 
 clean:
 	rm $(program_exe) y.tab.c lex.yy.c y.tab.h y.output
