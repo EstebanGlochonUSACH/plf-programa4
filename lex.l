@@ -1,4 +1,5 @@
 %{
+#include <string.h>
 #define YY_DECL int yylex()
 #include "y.tab.h"
 

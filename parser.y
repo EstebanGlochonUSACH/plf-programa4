@@ -53,6 +53,7 @@ double parse_sign(double num);
 double parse_int(double num);
 double parse_fix(double num);
 double parse_frac(double num);
+char *strsep(char **stringp, const char *delim);
 %}
 
 %union {
@@ -153,7 +154,7 @@ asignacion:
 
 void yyerror(const char *s)
 {
-    printf("Error en la l%cnea n%cumero: %d\n", 161, 163, yylineno);
+    printf("Error en la l%cnea n%cmero: %d\n", 161, 163, yylineno);
     //printf("Error en la l%cnea n%cumero: %d\n%s\n", 161, 163, yylineno, s);
     exit(1);
 };
@@ -206,7 +207,7 @@ void parse_print(double num)
 double parse_factorial(double n)
 {
     if(n < 0){
-        printf("Error: No se puede calcular el factorial de un n%umero negativo.\n", 163);
+        printf("Error: No se puede calcular el factorial de un n%cmero negativo.\n", 163);
         exit(-1);
     }
     int res = 1, i;
@@ -272,7 +273,7 @@ double parse_abs(double dbl)
 double parse_div(double n1, double n2)
 {
     if(floor(n1) != n1 || floor(n2) != n2){
-        printf("Error: No se puede obtener una divisi%cn entera con n%umeros decimales.\n", 162, 163);
+        printf("Error: No se puede obtener una divisi%cn entera con n%cmeros decimales.\n", 162, 163);
         exit(-1);
     }
 
@@ -284,7 +285,7 @@ double parse_div(double n1, double n2)
 double parse_mod(double n1, double n2)
 {
     if(floor(n1) != n1 || floor(n2) != n2){
-        printf("Error: No se puede obtener el m%cdulo de n%umeros no enteros.\n", 162, 163);
+        printf("Error: No se puede obtener el m%cdulo de n%cmeros no enteros.\n", 162, 163);
         exit(-1);
     }
 
@@ -296,7 +297,7 @@ double parse_mod(double n1, double n2)
 double parse_sqrt(double num)
 {
     if(num < 0){
-        printf("Error: El argumento de SQR no puede ser un n%umero negativo.\n", 163);
+        printf("Error: El argumento de SQR no puede ser un n%cmero negativo.\n", 163);
         exit(-1);
     }
     return sqrt(num);
@@ -305,7 +306,7 @@ double parse_sqrt(double num)
 double parse_cbrt(double num)
 {
     if(num < 0){
-        printf("Error: El argumento de CUR no puede ser un n%umero negativo.\n", 163);
+        printf("Error: El argumento de CUR no puede ser un n%cmero negativo.\n", 163);
         exit(-1);
     }
     return cbrt(num);
@@ -319,7 +320,7 @@ double parse_exp(double num)
 double parse_log_n(double num)
 {
     if(num < 0){
-        printf("Error: El argumento de LN no puede ser un n%umero negativo.\n", 163);
+        printf("Error: El argumento de LN no puede ser un n%cmero negativo.\n", 163);
         exit(-1);
     }
     return log(num);
@@ -328,7 +329,7 @@ double parse_log_n(double num)
 double parse_log_10(double num)
 {
     if(num < 0){
-        printf("Error: El argumento de LOG no puede ser un n%umero negativo.\n", 163);
+        printf("Error: El argumento de LOG no puede ser un n%cmero negativo.\n", 163);
         exit(-1);
     }
     return log10(num);
@@ -412,4 +413,15 @@ node_t *list_search(list_t *list, char *token)
     }
 
     return NULL;
+}
+
+char *strsep(char **stringp, const char *delim) {
+    char *rv = *stringp;
+    if (rv) {
+        *stringp += strcspn(*stringp, delim);
+        if (**stringp)
+            *(*stringp)++ = '\0';
+        else
+            *stringp = 0; }
+    return rv;
 }
